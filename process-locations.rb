@@ -199,8 +199,13 @@ if ARGV.length == 3
   $assets = asset_data
   $output = output
 
-  Dir.glob('%s/*.xml' % location_data) do |f|
-    process_street f
+  # if location_data is a directory, process all files in directory. Otherwise just process that file
+  if File.directory? location_data
+    Dir.glob('%s/*.xml' % location_data) do |f|
+      process_street f
+    end
+  else
+    process_street location_data
   end
 
 else
