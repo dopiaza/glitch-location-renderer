@@ -14,6 +14,11 @@ def process_street xml_file
   game_object = xml.at_xpath('/game_object')
   tsid = game_object['tsid']
 
+  if game_object.at_xpath("//object[@id='layers']").nil?
+    puts "No layers, skipping %s" % [tsid]
+    return
+  end
+
   layer_images = {}
   layer_image_data = {}
 
