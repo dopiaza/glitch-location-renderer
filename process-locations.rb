@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-  require 'nokogiri'
-  require 'RMagick'
+require 'nokogiri'
+require 'RMagick'
 include Magick
 
 $assets = './'
@@ -17,8 +17,14 @@ def process_street xml_file
   layer_images = {}
   layer_image_data = {}
 
-  gradient_top = game_object.at_xpath("//object[@id='gradient']/str[@id='top']").content.rjust(6, '0')
-  gradient_bottom = game_object.at_xpath("//object[@id='gradient']/str[@id='bottom']").content.rjust(6, '0')
+  gradient_top = '#ffffff'
+  gradient_bottom = '#ffffff'
+
+  gradient = game_object.at_xpath("//object[@id='gradient']")
+  unless gradient.nil?
+    gradient_top = game_object.at_xpath("//object[@id='gradient']/str[@id='top']").content.rjust(6, '0')
+    gradient_bottom = game_object.at_xpath("//object[@id='gradient']/str[@id='bottom']").content.rjust(6, '0')
+  end
 
   street_l = Integer(game_object.at_xpath("//object[@id='dynamic']/int[@id='l']").content)
   street_r = Integer(game_object.at_xpath("//object[@id='dynamic']/int[@id='r']").content)
